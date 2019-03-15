@@ -1,0 +1,24 @@
+{
+  "name": "@vemo/cli",
+  "version": "0.0.1",
+  "description": "",
+  "bin": {
+    "vemo": "bin.js"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "heyli",
+  "license": "MIT",
+  "dependencies": {
+    "co": "^4.6.0",
+    "koa": "^2.7.0",
+    "koa-joi-router": "^5.3.0",
+    "koa-swig": "^2.2.1",
+    "nodedev": "0.0.1"
+  },
+  "devDependencies": {
+    "node-dev": "^3.1.3"
+  }
+}
