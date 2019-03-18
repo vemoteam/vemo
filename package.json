@@ -1,9 +1,9 @@
 {
   "name": "@vemo/cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "bin": {
-    "vemo": "bin.js"
+    "vemo": "./bin/bin.js"
   },
   "main": "index.js",
   "scripts": {
@@ -17,9 +17,7 @@
     "koa": "^2.7.0",
     "koa-joi-router": "^5.3.0",
     "koa-swig": "^2.2.1",
-    "nodedev": "0.0.1"
-  },
-  "devDependencies": {
     "node-dev": "^3.1.3"
-  }
+  },
+  "devDependencies": {}
 }

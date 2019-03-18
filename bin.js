@@ -1,6 +1,19 @@
 #!/usr/bin/env node
 
 const path = require('path')
-const spawn = require('cross-spawn')
+const nodeDev = require('node-dev')
 
-const result = spawn.sync(path.join(__dirname, './node_modules/.bin/node-dev'), [path.join(__dirname, 'index.js')], { stdio: 'inherit' });
+nodeDev(
+    path.join(__dirname, 'index.js'),
+    [],
+    [], 
+    {
+        _: [],
+        'all-deps': false,
+        deps: true,
+        dedupe: false,
+        poll: false,
+        respawn: false,
+        notify: true
+    }
+)

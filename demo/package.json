@@ -9,7 +9,5 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "@vemo/cli": "latest"
-  }
+  "dependencies": {}
 }
