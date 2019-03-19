@@ -3,10 +3,8 @@ const path = require('path');
 module.exports = {
     "root": path.resolve("./server"),
     "template": {
-        "root": path.resolve("./server/template"),
         "map": {
-            "html": "underscore",
-            "extension": "html"
+            "html": "underscore"
         }
     },
     "routes": [
@@ -21,9 +19,10 @@ module.exports = {
         },
         {
             path: 'detail.js',
+            template: 'template/detail.html',
             route: "/detail/:id",
             method: "get",
             middlewares: [] 
-        }
+        },
     ]
 }

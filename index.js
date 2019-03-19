@@ -18,15 +18,14 @@ if (!fs.existsSync(configPath)) {
 }
 
 // default config
-const defaultConfig = {
+let defaultConfig = {
     "host": "localhost",
     "port": 5000,
     "root": path.resolve(),
-    "template": {
-        root: path.resolve('./template'),
-        autoRender: false
-    },
     "map": {}
+}
+defaultConfig.template = {
+    autoRender: false
 }
 // user defined config
 const userConfig = require(configPath)
@@ -42,9 +41,7 @@ if (!config.TplOff) {
         ...defaultConfig.template,
         ...config.template
     }
-    let tplRoot = tplConfig.root
-    delete tplConfig['root']
-    app.use(views(tplRoot, tplConfig))
+    app.use(views(config.root, tplConfig))
 }
 
 // define routers
@@ -69,7 +66,14 @@ config.routes.forEach((route) => {
 
     // call user define function
     router[c.method.toLowerCase() || 'get'](c.route, ...c.middlewares, async(ctx, next) => {
-        ctx.body = await functions(ctx.request.body || {}, ctx)
+        let data = await functions(ctx.request.body || {}, ctx) || {}
+        if (c.template) {
+            ctx.body = await ctx.render(c.template, data)
+        }
+        else {
+            ctx.body = data
+        }
+        
         await next()
     })
     
