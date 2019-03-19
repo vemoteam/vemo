@@ -4,7 +4,7 @@ const fs = require('fs')
 const Koa = require('koa')
 const Router = require('koa-joi-router');
 const co = require('co')
-const render = require('koa-swig')
+const views = require('@vemo/koa-views')
 const app = new Koa()
 
 // asign koa instance to koaInstance
@@ -24,9 +24,7 @@ const defaultConfig = {
     "root": path.resolve(),
     "template": {
         root: path.resolve('./template'),
-        autoescape: true,
-        cache: false,
-        ext: 'html',
+        autoRender: false
     },
     "map": {}
 }
@@ -38,18 +36,28 @@ if (!fs.existsSync(config.root)) {
     throw new Error(`${config.root} not exist!`)
 }
 
+// render template
+if (!config.TplOff) {
+    let tplConfig = {
+        ...defaultConfig.template,
+        ...config.template
+    }
+    let tplRoot = tplConfig.root
+    delete tplConfig['root']
+    app.use(views(tplRoot, tplConfig))
+}
+
 // define routers
-const routeMaps = Object.keys(config.map)
 const defaultRouteConfig = {
     method: 'get',
     middlewares: [],
+    route: '/'
 }
-routeMaps.forEach((file) => {
-    let filePath = path.resolve(config.root, file)
+config.routes.forEach((route) => {
+    let filePath = path.resolve(config.root, route.path)
     let functions = require(filePath)
-    let c = config.map[file] || {}
+    let c = route || {}
     c = {...defaultRouteConfig, ...c}
-    c.route = c.route || `/${file}`
 
     let router = new Router()
 
@@ -61,18 +69,12 @@ routeMaps.forEach((file) => {
 
     // call user define function
     router[c.method.toLowerCase() || 'get'](c.route, ...c.middlewares, async(ctx, next) => {
-        ctx.body = await functions(ctx.request.body || {} ,ctx)
+        ctx.body = await functions(ctx.request.body || {}, ctx)
         await next()
     })
     
     app.use(router.middleware())
 })
-
-// render template
-app.context.render = co.wrap(render({
-    ...defaultConfig.template,
-    ...config.template
-}))
 
 // start the server
 app.listen(config.port, function(err) {
