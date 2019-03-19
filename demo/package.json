@@ -12,6 +12,8 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "underscore": "^1.9.1"
+  },
   "devDependencies": {}
 }
