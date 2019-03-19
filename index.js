@@ -51,7 +51,7 @@ const defaultRouteConfig = {
     route: '/'
 }
 config.routes.forEach((route) => {
-    let filePath = path.resolve(config.root, route.path)
+    let filePath = path.isAbsolute(route.path) ? route.path : path.resolve(config.root, route.path)
     let functions = require(filePath)
     let c = route || {}
     c = {...defaultRouteConfig, ...c}

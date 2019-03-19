@@ -19,8 +19,15 @@ module.exports = {
         },
         {
             path: 'detail.js',
-            template: 'template/detail.html',
+            template: path.resolve('server/template/detail.html'),
             route: "/detail/:id",
+            method: "get",
+            middlewares: [] 
+        },
+        {
+            path: 'detail.js',
+            template: './template/detail.html',
+            route: "/detail",
             method: "get",
             middlewares: [] 
         },
