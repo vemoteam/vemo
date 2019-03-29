@@ -5,5 +5,5 @@ if (!isProduciton) {
   require('./dev')
 }
 else {
-  // require('./prod')
+  require('./prod')
 }

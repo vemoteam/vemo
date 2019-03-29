@@ -30,6 +30,6 @@ module.exports = {
             route: "/detail",
             method: "get",
             middlewares: [] 
-        },
+        }
     ]
 }

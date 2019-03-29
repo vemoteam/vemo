@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+  </head>
+  <body>
+    <div id="page"><span id="client"></span><span> <%= name %></span></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script>
+        let socket = io('http://localhost:5000/ws');
+
+        socket.emit('server', { hello: 'server' });
+
+        socket.on('client', function (data) {
+            console.log(data);
+            document.getElementById('client').innerText = 'hello ' + data.hello;
+        });
+    </script>
+  </body>
+</html>
