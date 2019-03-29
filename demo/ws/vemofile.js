@@ -1,5 +1,7 @@
 const path = require('path');
 
+console.log(koaInstance)
+
 module.exports = {
     "root": path.resolve("./server"),
     "template": {

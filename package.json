@@ -12,7 +12,7 @@
   "author": "heyli",
   "license": "MIT",
   "dependencies": {
-    "@vemo/koa-views": "^6.1.6",
+    "@vemo/koa-views": "^6.1.7",
     "koa": "^2.7.0",
     "koa-joi-router": "^5.3.0",
     "node-dev": "^3.1.3",
