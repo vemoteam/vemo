@@ -7,7 +7,7 @@ module.exports = {
             "html": "underscore"
         }
     },
-    "socket": true,
+    "socket": true, // 如果值为对象，则是 socket.io 的配置参数
     "routes": [
         {
             path: 'chat.js',
