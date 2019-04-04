@@ -38,7 +38,7 @@ let opts = minimist(devArgs, {
 });
 
 nodeDev(
-  path.join(__dirname, '../index.js'),
+  path.join(__dirname, '../src/index.js'),
   scriptArgs,
   nodeArgs,
   opts
