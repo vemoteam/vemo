@@ -18,6 +18,10 @@ program
     .action(function () {
         process.env.NODE_ENV === 'production'
         require('./start')
+        let list = require('./list')
+        setTimeout(() => {
+            list.showPs()
+        }, 900)
     })
 
 program

@@ -1,6 +1,12 @@
 const path = require('path')
 const fs = require('fs')
 
+const {
+    VemoError,
+    VemoFileNotExist,
+    ConfigRootNotExist,
+} = require('./error')
+
 const Koa = require('koa')
 const Router = require('koa-joi-router')
 const views = require('@vemo/koa-views')
@@ -17,7 +23,7 @@ global.serverInstance = server
 const configPath = path.resolve('vemofile.js')
 
 if (!fs.existsSync(configPath)) {
-    throw new Error('vemofile not exist!')
+    throw new VemoError(VemoFileNotExist, 'vemofile not exist!')
 }
 
 // default config
@@ -35,7 +41,7 @@ const userConfig = require(configPath)
 const config = {...defaultConfig, ...userConfig}
 
 if (!fs.existsSync(config.root)) {
-    throw new Error(`${config.root} not exist!`)
+    throw new VemoError(ConfigRootNotExist, `${config.root} not exist!`)
 }
 
 // init socket.io

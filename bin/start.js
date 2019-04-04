@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const spawn = require('child_process').spawn
-const spawnSync = require('child_process').spawnSync
+// const spawnSync = require('child_process').spawnSync
 const process = require('process')
 
 const packageJsonPath = path.resolve('package.json')

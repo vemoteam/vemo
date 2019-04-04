@@ -5,7 +5,12 @@ const {
 
 function stop(name) {
     let ps = findByName(name)
-    execSync(`kill ${ps.id}`)
+    if (ps) {
+        execSync(`kill ${ps.id}`)
+    }
+    else {
+        console.log(`[vemo] process name [${name}] does not exist.`)
+    }
 }
 
 exports.stop = stop

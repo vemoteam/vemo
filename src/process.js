@@ -1,6 +1,10 @@
-const path = require('path')
+// const path = require('path')
 const cluster = require('cluster')
 const utils = require('./utils')
+const {
+    ConfigRootNotExist,
+    VemoFileNotExist
+} = require('./error')
 
 const liveTime = 60 * 60 * 1000; //子进程生命周期
 const restartSpaceTime = 60 * 1000; //重启间隔时间，避免全部一起重启导致服务不可用
@@ -147,7 +151,18 @@ function init() {
     }
     else if (cluster.isWorker) {
 
-        require('./index')
+        try {
+            require('./index')
+        }
+        catch (err) {
+            if (err.code === VemoFileNotExist
+                || err.code === ConfigRootNotExist) {
+                process.send('killMaster')
+            }
+            else {
+                console.error('Uncaught Error:\n', err.code, err.message, err.stack || '');
+            }
+        }
 
         process.on('uncaughtException', err => {
             // 端口被占用，则直接退出进程
