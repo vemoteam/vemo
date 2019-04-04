@@ -2,14 +2,14 @@ const path = require('path')
 const cluster = require('cluster')
 const utils = require('./utils')
 
-const liveTime = 60 * 60 * 1000;            //子进程生命周期
-const restartSpaceTime = 60 * 1000;         //重启间隔时间，避免全部一起重启导致服务不可用
-const heartBeatKillTime = 60 *1000;          //心跳包最大间隔，超出此时间则认为进程已经不正常死亡，触发重启
+const liveTime = 60 * 60 * 1000; //子进程生命周期
+const restartSpaceTime = 60 * 1000; //重启间隔时间，避免全部一起重启导致服务不可用
+const heartBeatKillTime = 60 *1000; //心跳包最大间隔，超出此时间则认为进程已经不正常死亡，触发重启
 
-let workerCreateTime = {};  //子进程创建时间存在这里
-let lastRestartTime = 0;    //上一次子进程重启时间
+let workerCreateTime = {}; //子进程创建时间存在这里
+let lastRestartTime = 0; //上一次子进程重启时间
 
-let heartBeatTime = {};   //接收到心跳包时间
+let heartBeatTime = {}; //接收到心跳包时间
 let lastWorkKillTime = 0; //上次进程杀死时间
 
 function timer(cb) {
@@ -89,10 +89,6 @@ function init() {
     let newWorker
 
     if (cluster.isMaster) {
-        process.on('message', (data) => {
-            console.log('=====master=====')
-            console.log(data)
-        })
         //启动相当于物理核心个数的进程
         for (let i = 0; i < utils.cpuNum; i++) {
             newWorker = cluster.fork()
@@ -138,7 +134,6 @@ function init() {
                 }
             }
 
-
             //检查心跳包时间
             for (let id in heartBeatTime) {
                 if (heartBeatTime.hasOwnProperty(id)) {
@@ -155,6 +150,7 @@ function init() {
         require('./index')
 
         process.on('uncaughtException', err => {
+            // 端口被占用，则直接退出进程
             if (err.code === 'EADDRINUSE') {
                 process.send('killMaster')
             }
