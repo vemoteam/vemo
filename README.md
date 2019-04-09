@@ -14,3 +14,10 @@
 ## Demo
 * [HTTP](demo/http/README.md)
 * [Websocket](demo/ws/README.md)
+
+## 特性
+* 支持 `http` 及 `websocket`
+* 支持静态资源
+* 支持模板渲染
+* 自定义路由及入参校验
+* 支持进程管理器及 `cluster` 模式（自带及 `pm2` 均支持）
