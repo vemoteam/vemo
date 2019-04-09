@@ -1,5 +1,5 @@
 ![]()
-<p style="text-align: center">
+<p align="center">
     <img src="https://main.qcloudimg.com/raw/02900a9c25c0de97e786e8bc423f3549.png">
 </p>
 
@@ -17,7 +17,8 @@
 
 ## 特性
 * 支持 `http` 及 `websocket`
+* 支持基于模板初始化 `http` 或 `websocket` 项目
 * 支持静态资源
 * 支持模板渲染
 * 自定义路由及入参校验
-* 支持进程管理器及 `cluster` 模式（自带及 `pm2` 均支持）
+* 支持进程管理器及 `cluster` 模式（自带及 `pm2` 均支持，自带的仅支持 `Mac` 和 `Linux`）
