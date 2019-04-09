@@ -9,9 +9,12 @@ const {
 
 const Koa = require('koa')
 const Router = require('koa-joi-router')
+const serve = require('koa-static')
 const views = require('@vemo/koa-views')
 const app = new Koa()
-const server = require('http').Server(app.callback());
+const server = require('http').Server(app.callback())
+
+const isProduction = process.env.NODE_ENV === 'production'
 
 // asign koa instance to koaInstance
 global.koaInstance = app
@@ -28,10 +31,9 @@ if (!fs.existsSync(configPath)) {
 
 // default config
 let defaultConfig = {
-    "host": "localhost",
-    "port": 5000,
-    "root": path.resolve(),
-    "map": {}
+    'host': 'localhost',
+    'port': 5000,
+    'root': path.resolve(),
 }
 defaultConfig.template = {
     autoRender: false
@@ -42,6 +44,19 @@ const config = {...defaultConfig, ...userConfig}
 
 if (!fs.existsSync(config.root)) {
     throw new VemoError(ConfigRootNotExist, `${config.root} not exist!`)
+}
+
+// init static files serving
+if (config.static) {
+    let staticConfig = (typeof config.static === 'object') ? config.static : {
+        'root': 'static',
+        'options': {}
+    }
+
+    if (!path.isAbsolute(staticConfig.root)) {
+        staticConfig.root = path.join(config.root, staticConfig.root)
+    }
+    app.use(serve(staticConfig.root, staticConfig.options))
 }
 
 // init socket.io
@@ -119,7 +134,8 @@ server.listen(config.port, function(err) {
     if (err) {
         console.error(err);
     }
-    else {
+    // 生产环境不输出
+    else if (!isProduction) {
         console.log(`Listening on port %s. Open up http://${config.host}:%s/ in your browser.`, config.port, config.port);
     }
 })

@@ -2,7 +2,7 @@ const execSync = require('child_process').execSync
 const {
     table
 } = require('table')
-
+const chalk = require('chalk')
 
 function findAll() {
     let cmd = 'ps aux | grep -i \'\\-\\-title=\\[vemo\\]\' | awk \'{print $11 " " $2 " " $12 " " $13 " " $9}\''
@@ -56,13 +56,17 @@ function findByName(name) {
 function showPs() {
     let psInfo = findAll()
     let data = [
-        ['id', 'name', 'uptime']
+        ['name', 'id', 'uptime']
     ]
+
+    data[0] = data[0].map((item) => {
+        return chalk.green(item)
+    })
 
     Object.keys(psInfo).forEach((k) => {
         data.push([
-            k,
             psInfo[k].name,
+            k,
             psInfo[k].uptime
         ])
     })

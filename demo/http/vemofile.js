@@ -1,17 +1,17 @@
 const path = require('path');
 
 module.exports = {
-    "root": path.resolve("./server"),
-    "template": {
-        "map": {
-            "html": "underscore"
+    'root': path.resolve('./server'),
+    'template': {
+        'map': {
+            'html': 'underscore'
         }
     },
-    "routes": [
+    'routes': [
         {
             path: 'index.js',
-            route: "/",
-            method: "post",
+            route: '/',
+            method: 'post',
             validate: {
                 type: 'form',
                 continueOnError: true
@@ -19,16 +19,16 @@ module.exports = {
         },
         {
             path: 'detail.js',
-            template: path.resolve('server/template/detail.html'),
-            route: "/detail/:id",
-            method: "get",
+            template: 'template/detail.html',
+            route: '/detail/:id',
+            method: 'get',
             middlewares: [] 
         },
         {
             path: 'detail.js',
             template: './template/detail.html',
-            route: "/detail",
-            method: "get",
+            route: '/detail',
+            method: 'get',
             middlewares: [] 
         }
     ]

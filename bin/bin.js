@@ -7,7 +7,16 @@ program
     .version(packgeJson.version)
 
 program
+    .command('init [dirname]')
+    .description('init project base on template')
+    .action(function (dirname = './') {
+        let init = require('./init')
+        init.init(dirname)
+    })
+
+program
     .command('dev')
+    .description('start server in development env')
     .action(function () {
         process.env.NODE_ENV = 'development'
         require('./dev')
@@ -15,8 +24,9 @@ program
 
 program
     .command('start')
+    .description('start server in production env')
     .action(function () {
-        process.env.NODE_ENV === 'production'
+        process.env.NODE_ENV = 'production'
         require('./start')
         let list = require('./list')
         setTimeout(() => {
@@ -25,12 +35,13 @@ program
     })
 
 program
-    .command('restart <ps_name>')
-    .action(function (ps_name) {
+    .command('restart <process_name>')
+    .description('restart server in production env')
+    .action(function (process_name) {
         let stop = require('./stop')
-        stop.stop(ps_name)
+        stop.stop(process_name)
 
-        process.env.NODE_ENV === 'production'
+        process.env.NODE_ENV = 'production'
         require('./start')
 
         let list = require('./list')
@@ -42,17 +53,20 @@ program
 
 program
     .command('list')
+    .description('list all process in production env')
     .action(function () {
         let list = require('./list')
         list.showPs()
     })
 
 program
-    .command('stop <ps_name>')
-    .action(function (ps_name) {
+    .command('stop <process_name>')
+    .alias('delete')
+    .description('stop server in production env')
+    .action(function (process_name) {
         let list = require('./list')
         let stop = require('./stop')
-        stop.stop(ps_name)
+        stop.stop(process_name)
         list.showPs()
     })
 

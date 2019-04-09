@@ -4,11 +4,10 @@
   "description": "",
   "main": "vemofile.js",
   "scripts": {
-    "start": "vemo",
-    "dist": "export NODE_ENV=production && vemo",
-    "prod": "pm2 start ./node_modules/@vemo/cli",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "list": "pm2 list"
+    "start": "vemo dev",
+    "dist": "vemo start",
+    "pm2": "pm2 start ./node_modules/@vemo/cli/ --name=http --env=production",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
