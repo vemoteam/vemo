@@ -1,4 +1,5 @@
 const path = require('path');
+const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
     'root': path.resolve('./server'),
@@ -6,6 +7,9 @@ module.exports = {
     'template': {
         'map': {
             'html': 'underscore'
+        }
+        'options': {
+            'cache': isProduction ? true : false // 生产环境的时候缓存模板
         }
     },
     'socket': true, // 如果值为对象，则是 socket.io 的配置参数

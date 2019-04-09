@@ -1,6 +1,6 @@
 ![]()
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/02900a9c25c0de97e786e8bc423f3549.png">
+    <img src="https://main.qcloudimg.com/raw/157e6292a5a839b8e2f6a6b3501c229f.png">
 </p>
 
 简易的 Web 框架

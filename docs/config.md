@@ -70,10 +70,15 @@ module.exports = {
 ### 示例
 
 ```js
+const isProduction = process.env.NODE_ENV === 'production'
+
 module.exports = {
     'template': {
         'map': {
             'html': 'underscore'
+        },
+        'options': {
+            'cache': isProduction ? true : false // 生产环境的时候缓存模板
         }
     }
 }
