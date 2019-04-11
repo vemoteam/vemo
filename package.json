@@ -1,6 +1,6 @@
 {
   "name": "@vemo/cli",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "",
   "bin": {
     "vemo": "./bin/bin.js"
