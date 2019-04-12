@@ -2,9 +2,12 @@
 module.exports = (io) => {
     io
     .on('connection', function (socket) {
-        socket.emit('client', { hello: 'client' });
+        setTimeout(() => {
+            socket.emit('client', { hello: 'client' })
+        }, 500)
+        
         socket.on('server', function (data) {
-            console.log(data);
+            console.log(data)
         })
     })
 };

@@ -36,11 +36,19 @@ let defaultConfig = {
     'root': path.resolve(),
 }
 defaultConfig.template = {
-    autoRender: false
+    'map': {
+        'html': 'underscore'
+    },
+    'options': {
+        'cache': isProduction ? true : false // 生产环境的时候缓存模板
+    }
 }
 // user defined config
 const userConfig = require(configPath)
 const config = {...defaultConfig, ...userConfig}
+
+// retify some config stuff
+config.template.autoRender = false
 
 if (!fs.existsSync(config.root)) {
     throw new VemoError(ConfigRootNotExist, `${config.root} not exist!`)
@@ -67,7 +75,7 @@ if (config.socket) {
 }
 
 // render template
-if (!config.TplOff) {
+if (!config.templateOff) {
     let tplConfig = {
         ...defaultConfig.template,
         ...config.template

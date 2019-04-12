@@ -71,20 +71,24 @@ module.exports = {
 
 ```js
 const isProduction = process.env.NODE_ENV === 'production'
-
+// vemo 的模板默认配置
 module.exports = {
     'template': {
         'map': {
             'html': 'underscore'
         },
         'options': {
-            'cache': isProduction ? true : false // 生产环境的时候缓存模板
+            'cache': isProduction ? true : false // 生产环境的时候缓存模板，填其它 options 时，请不要忘记重新将些配置带上
         }
     }
 }
 ```
 
 上面的配置表示，`html` 后缀的模板文件，使用 `underscore` 模板引擎解析。
+
+## templateOff
+
+值为 `true` 时，关闭模板引擎解析。 
 
 ## socket
 
