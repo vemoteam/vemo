@@ -20,17 +20,17 @@ module.exports = async (event, ctx) => {
 
 如下面例子，利用传入的 `io` 对象处理各种 `websocket` 的事件。
 
-`io`: [socket.io server 对象](https://socket.io/docs/server-api/#Server)
+`socket`: [socket.io socket 对象](https://socket.io/docs/server-api/#Socket)
+`ctx`: 运行上下文
+- `ctx.request`: `socket.request`
+- `ctx.io`: [socket.io io 对象](https://socket.io/docs/server-api/#Server)
 
 ```js
 
-module.exports = (io) => {
-    io
-    .on('connection', function (socket) {
-        socket.emit('client', { hello: 'client' });
-        socket.on('server', function (data) {
-            console.log(data);
-        })
+module.exports = (socket, ctx) => {
+    socket.emit('client', { hello: 'client' });
+    socket.on('server', function (data) {
+        console.log(data);
     })
 };
 ```

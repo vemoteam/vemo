@@ -57,42 +57,60 @@ if (!fs.existsSync(config.root)) {
     throw new VemoError(ConfigRootNotExist, `${config.root} not exist!`)
 }
 
-// init static files serving
-if (config.static) {
-    let staticConfig = (typeof config.static === 'object') ? config.static : {
-        'root': 'static',
-        'options': {}
-    }
+function initStatic() {
+    // init static files serving
+    if (config.static) {
+        let staticConfig = (typeof config.static === 'object') ? config.static : {
+            'root': 'static',
+            'options': {}
+        }
 
-    if (!path.isAbsolute(staticConfig.root)) {
-        staticConfig.root = path.join(config.root, staticConfig.root)
+        if (!path.isAbsolute(staticConfig.root)) {
+            staticConfig.root = path.join(config.root, staticConfig.root)
+        }
+        app.use(serve(staticConfig.root, staticConfig.options))
     }
-    app.use(serve(staticConfig.root, staticConfig.options))
 }
 
-// init socket.io
-let io = null
-if (config.socket) {
-    let socketConfig = (typeof config.socket === 'object') ? config.socket : {}
-    io = require('socket.io')(server, socketConfig)
-}
-
-// render template
-if (!config.templateOff) {
-    let tplConfig = {
-        ...defaultConfig.template,
-        ...config.template
+function initTemplate() {
+    // render template
+    if (config.template) {
+        let tplConfig = {
+            ...defaultConfig.template,
+            ...config.template
+        }
+        app.use(views(config.root, tplConfig))
     }
-    app.use(views(config.root, tplConfig))
 }
 
-if (config.cloudbase) {
-    config.cloudbase = typeof config.cloudbase === 'object' ?  config.cloudbase : {
-        env: null
+function initIO() {
+    // init socket.io
+    let io = null
+    if (config.socket) {
+        let socketConfig = (typeof config.socket === 'object') ? config.socket : {}
+        io = require('socket.io')(server, socketConfig)
+        app.io = io
+        return io
     }
 
-    app.use(cloudBaseMiddleware(config.cloudbase))
+    return null
 }
+
+function initCloudBase(instance) {
+    if (config.cloudbase) {
+        config.cloudbase = typeof config.cloudbase === 'object' ?  config.cloudbase : {
+            env: null
+        }
+    
+        instance.use(cloudBaseMiddleware(config.cloudbase))
+    }
+}
+
+initStatic()
+initTemplate()
+let io = initIO()
+initCloudBase(app)
+
 
 // define routers
 const defaultRouteConfig = {
@@ -137,14 +155,24 @@ config.routes.forEach((route) => {
     else if (c.type === 'websocket' && config.socket) {
         // socket.io namespace
         let r = io.of(c.route)
-        
+
         // namespace middleware
         c.middlewares.forEach((fn) => {
             r = r.use(fn)
         })
 
+        initCloudBase(r)
+
         // pass io object to handler
-        handler(r)
+        // handler(r)
+
+        r.on('connect', async (socket) => {
+            let context = app.createContext(socket.request, {})
+            context.io = io
+            context.tcb = socket.hasOwnProperty('tcb') ? socket.tcb : null
+
+            handler(socket, context)
+        })
     }
 })
 

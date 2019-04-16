@@ -65,7 +65,7 @@ module.exports = {
 
 ## template
 
-模板的配置，此处使用的开源项目是 [`@vemo/koa-views`](https://github.com/lcxfs1991/koa-views) ，基于 `koa-views` 的定制版本。
+模板的配置，值可以是 `boolean` 或 `object`，如果是 `true` 的时候，默认值请参考下面的 `标例`。 此处使用的开源项目是 [`@vemo/koa-views`](https://github.com/lcxfs1991/koa-views) ，基于 `koa-views` 的定制版本。
 
 ### 示例
 
@@ -75,7 +75,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 module.exports = {
     'template': {
         'map': {
-            'html': 'underscore'
+            'html': 'underscore' // html 文件的引擎默认采用 underscore
         },
         'options': {
             'cache': isProduction ? true : false // 生产环境的时候缓存模板，填其它 options 时，请不要忘记重新将些配置带上
@@ -86,17 +86,13 @@ module.exports = {
 
 上面的配置表示，`html` 后缀的模板文件，使用 `underscore` 模板引擎解析。
 
-## templateOff
-
-值为 `true` 时，关闭模板引擎解析。 
-
 ## socket
 
 开启 websocket 功能。如果值为 `true`，使用默认 [`socket.io`](https://socket.io/docs/server-api/) 配置，如果值为对象，则可以自定义 [`socket.io`](https://socket.io/docs/server-api/) 的配置。
 
 ## cloudbase
 
-腾讯云云开发内置中间件，注入 [tcb-admin-node](https://github.com/TencentCloudBase/tcb-admin-node/) 对象，并且会协助获取临时密钥
+腾讯云云开发内置中间件，注入 [tcb-admin-node](https://github.com/TencentCloudBase/tcb-admin-node/) 对象（挂在在 `ctx` 上下文中），并且会协助获取临时密钥。
 
 |类型 | 必填 | 默认值 | 说明
 | --- | --- | --- | ---

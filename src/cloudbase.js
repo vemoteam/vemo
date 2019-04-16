@@ -63,7 +63,8 @@ module.exports = (options = {}) => {
         tcb.init({
             env: process.env.TCB_ENV
         })
-        ctx.tcb = tcb
+
+        ctx.tcb = tcb // 上下文挂载
 
         await next()
     }
