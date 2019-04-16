@@ -94,6 +94,49 @@ module.exports = {
 
 开启 websocket 功能。如果值为 `true`，使用默认 [`socket.io`](https://socket.io/docs/server-api/) 配置，如果值为对象，则可以自定义 [`socket.io`](https://socket.io/docs/server-api/) 的配置。
 
+## cloudbase
+
+腾讯云云开发内置中间件，注入 [tcb-admin-node](https://github.com/TencentCloudBase/tcb-admin-node/) 对象，并且会协助获取临时密钥
+
+|类型 | 必填 | 默认值 | 说明
+| --- | --- | --- | ---
+| boolean/object |  否 | false | 与腾讯云云开发相关的配置项，设置 `true` 或者填写 `object` 配置的时候则会开启。如果为 `true`，会在云主机中尝试获取临时密钥对
+
+* 类型为 `object` 时的字段 
+
+| 字段 | 类型 | 必填 | 默认值 | 说明
+| --- | --- | --- | --- | ---
+| secretId | string | 否 | | 腾讯云 API 固定密钥对。[前往获取](https://console.cloud.tencent.com/cam/capi)
+| secretKey | string | 否 | | 同上
+| env | string | 否 | | 云开发环境 id
+| maxRetryTimes | number | 否 | 生产环境最多重试3次，开发环境不重试 | 如果不填上面的固定密钥对，会尝试拉取临时密钥对（只在腾讯云的云主机，且该云账号有授权小程序云主机角色才生效）
+
+### 示例
+
+```js
+const path = require('path');
+module.exports = {
+    'cloudbase': {
+        secretId: 'xxx',
+        secretKey: 'xxx',
+        env: 'xxx',
+        maxRetryTimes: 3
+    },
+    'root': path.resolve('./server'),
+    'static': {
+        'root': path.resolve('./server/static/'), // 既可以是绝对路径，也可以是相对路径（相对于root）
+        'options': {}
+    }，
+    'routes': [
+        {
+            path: 'index.js',
+            route: '/',
+            method: 'get'
+        },
+    ]
+}
+```
+
 ## routes
 
 配置服务路由和处理逻辑文件的对象。

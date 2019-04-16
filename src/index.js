@@ -7,6 +7,8 @@ const {
     ConfigRootNotExist,
 } = require('./error')
 
+const cloudBaseMiddleware = require('./cloudbase')
+
 const Koa = require('koa')
 const Router = require('koa-joi-router')
 const serve = require('koa-static')
@@ -34,6 +36,7 @@ let defaultConfig = {
     'host': 'localhost',
     'port': 5000,
     'root': path.resolve(),
+    'cloudbase': false // 默认开启
 }
 defaultConfig.template = {
     'map': {
@@ -81,6 +84,14 @@ if (!config.templateOff) {
         ...config.template
     }
     app.use(views(config.root, tplConfig))
+}
+
+if (config.cloudbase) {
+    config.cloudbase = typeof config.cloudbase === 'object' ?  config.cloudbase : {
+        env: null
+    }
+
+    app.use(cloudBaseMiddleware(config.cloudbase))
 }
 
 // define routers

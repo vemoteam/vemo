@@ -1,6 +1,6 @@
 {
   "name": "@vemo/cli",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "",
   "bin": {
     "vemo": "./bin/bin.js"
@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "@vemo/koa-views": "^6.1.7",
+    "axios": "^0.18.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "fs-extra": "^7.0.1",
@@ -31,6 +32,7 @@
     "node-dev": "^3.1.3",
     "socket.io": "^2.2.0",
     "table": "^5.2.3",
+    "tcb-admin-node": "^1.4.6",
     "underscore": "^1.9.1"
   }
 }
