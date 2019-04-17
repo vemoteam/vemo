@@ -14,12 +14,6 @@ module.exports = {
         },
         {
             path: 'index.js',
-            template: 'template/index.html',
-            route: '/:id',
-            method: 'get'
-        },
-        {
-            path: 'index.js',
             template: './template/index.html',
             route: '/',
             method: 'get'

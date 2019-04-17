@@ -32,37 +32,6 @@ module.exports = {
 
 由于`root` 有定义，因此 `routes` 中的 `index.js` 路径是： `path.join(path.resolve('./server'), 'index.js')` 。
 
-## static
-
-静态资源处理，值可以是 `boolean` 或 `object`。如果值为 `true`，是默认值是：
-
-```js
-'static': {
-    'root': 'static',
-    'options': {}
-}
-```
-
-### 示列
-
-```js
-const path = require('path');
-module.exports = {
-    'root': path.resolve('./server'),
-    'static': {
-        'root': path.resolve('./server/static/'), // 既可以是绝对路径，也可以是相对路径（相对于root）
-        'options': {}
-    }，
-    'routes': [
-        {
-            path: 'index.js',
-            route: '/',
-            method: 'get'
-        },
-    ]
-}
-```
-
 ## template
 
 模板的配置，值可以是 `boolean` 或 `object`，如果是 `true` 的时候，默认值请参考下面的 `示例`。 此处使用的开源项目是 [`@vemo/koa-views`](https://github.com/lcxfs1991/koa-views) ，基于 `koa-views` 的定制版本。
@@ -119,10 +88,6 @@ module.exports = {
         maxRetryTimes: 3
     },
     'root': path.resolve('./server'),
-    'static': {
-        'root': path.resolve('./server/static/'), // 既可以是绝对路径，也可以是相对路径（相对于root）
-        'options': {}
-    }，
     'routes': [
         {
             path: 'index.js',
@@ -164,13 +129,38 @@ module.exports = {
 
 | 字段 | 类型 | 必填 | 默认值 | 说明
 | --- | --- | --- | --- | ---
-| type | string | 否 | 'http' | 路由类型，值为 `http` 或  `websocket`
+| type | string | 否 | 'http' | 路由类型，值为 `http`(http模式), `websocket`(websocket模式) 或 `static`(静态资源模式)
 | path | string | 是 | | 文件路径
 | route | string | 否 | '/' | 路由路径
 | template | string | 否 | | 可使用绝对路径或相对路径(相对于 `root`)
 | method | string | 否 | 'get' | `type` 为 `http` 的情况下，可以填 `get`, `post`, `put` 等 `http` 方法的值
 | middlewares | array | 否 | [] | 中间件数组，`http` 模式下，使用 [`koa`](https://koajs.com/#application) 的中间件，而在 `websocket` 的模式下，要写 [`socket.io`](https://socket.io/docs/server-api/#namespace-use-fn) 的中间件。中间件的详细写法，请参考文档[中间件](../docs/middleware.md)
 | validate | object | 否 | | 使用了 [koa-joi-route](https://github.com/koajs/joi-router/)，参数值该类库的 `validate` 参数
+| options | object | 否 | | 当 `type` 为 `static`时，此选项是 [koa-static](https://github.com/koajs/static) 类库的 `options` 参数
 
-至于 `path` 所指向的文件如何处理 `http` 和 `websocket` 请求，可参考文档 [请求处理](./controlle.md)
+* 至于 `path` 所指向的文件如何处理 `http` 和 `websocket` 请求，可参考文档 [请求处理](./controlle.md)
+
+* 例子
+```js
+// http 模式
+{
+    path: 'chat.js',
+    route: '/chat',
+}
+
+// websocket 模式
+{
+    path: 'ws.js',
+    type: 'websocket',
+    route: '/ws'
+}
+
+// static 模式
+{
+    path: 'static',
+    type: 'websocket',    
+}
+```
+
+* `static` 模式下，`path` 是静态资源的目录，可以是相对路径（相对 `root`）或者绝对路径。此处是使用了 [koa-static](https://github.com/koajs/static) 中间件，相关特性与参数可以参考中间件的文档。
 

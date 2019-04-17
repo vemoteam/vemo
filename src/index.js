@@ -57,20 +57,20 @@ if (!fs.existsSync(config.root)) {
     throw new VemoError(ConfigRootNotExist, `${config.root} not exist!`)
 }
 
-function initStatic() {
-    // init static files serving
-    if (config.static) {
-        let staticConfig = (typeof config.static === 'object') ? config.static : {
-            'root': 'static',
-            'options': {}
-        }
+// function initStatic() {
+//     // init static files serving
+//     if (config.static) {
+//         let staticConfig = (typeof config.static === 'object') ? config.static : {
+//             'root': 'static',
+//             'options': {}
+//         }
 
-        if (!path.isAbsolute(staticConfig.root)) {
-            staticConfig.root = path.join(config.root, staticConfig.root)
-        }
-        app.use(serve(staticConfig.root, staticConfig.options))
-    }
-}
+//         if (!path.isAbsolute(staticConfig.root)) {
+//             staticConfig.root = path.join(config.root, staticConfig.root)
+//         }
+//         app.use(serve(staticConfig.root, staticConfig.options))
+//     }
+// }
 
 function initTemplate() {
     // render template
@@ -107,7 +107,7 @@ function initCloudBase(instance) {
 }
 
 let io = initIO()
-initStatic()
+// initStatic()
 initTemplate()
 initCloudBase(app)
 
@@ -120,7 +120,7 @@ const defaultRouteConfig = {
 }
 config.routes.forEach((route) => {
     let filePath = path.isAbsolute(route.path) ? route.path : path.resolve(config.root, route.path)
-    let handler = require(filePath)
+    let handler = route.type !== 'static' ? require(filePath) : null
     let c = route || {}
     c = {...defaultRouteConfig, ...c}
     c.middlewares = c.middlewares || []
@@ -178,6 +178,11 @@ config.routes.forEach((route) => {
 
             handler(socket, context)
         })
+    }
+    else if (c.type === 'static') {
+        let root = path.isAbsolute(c.path) ? c.path : path.join(config.root, c.path)
+
+        app.use(serve(root, c.options || {}))
     }
 })
 

@@ -2,9 +2,12 @@ const path = require('path')
 
 module.exports = {
     'root': path.resolve('./server'),
-    'static': true,
     'socket': true, // 如果值为对象，则是 socket.io 的配置参数
     'routes': [
+        {
+            path: 'static',
+            type: 'static'
+        },
         {
             path: 'chat.js',
             template: './template/chat.html',
@@ -21,6 +24,6 @@ module.exports = {
             path: 'ws.js',
             type: 'websocket',
             route: '/ws'
-        },
+        }
     ]
 }
