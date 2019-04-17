@@ -65,7 +65,7 @@ module.exports = {
 
 ## template
 
-模板的配置，值可以是 `boolean` 或 `object`，如果是 `true` 的时候，默认值请参考下面的 `标例`。 此处使用的开源项目是 [`@vemo/koa-views`](https://github.com/lcxfs1991/koa-views) ，基于 `koa-views` 的定制版本。
+模板的配置，值可以是 `boolean` 或 `object`，如果是 `true` 的时候，默认值请参考下面的 `示例`。 此处使用的开源项目是 [`@vemo/koa-views`](https://github.com/lcxfs1991/koa-views) ，基于 `koa-views` 的定制版本。
 
 ### 示例
 
@@ -92,7 +92,7 @@ module.exports = {
 
 ## cloudbase
 
-腾讯云云开发内置中间件，注入 [tcb-admin-node](https://github.com/TencentCloudBase/tcb-admin-node/) 对象（挂在在 `ctx` 上下文中），并且会协助获取临时密钥。
+腾讯云云开发内置中间件，注入 [tcb-admin-node](https://github.com/TencentCloudBase/tcb-admin-node/) 对象（挂在 `ctx` 上下文中），并且会协助获取临时密钥。
 
 |类型 | 必填 | 默认值 | 说明
 | --- | --- | --- | ---
@@ -169,7 +169,8 @@ module.exports = {
 | route | string | 否 | '/' | 路由路径
 | template | string | 否 | | 可使用绝对路径或相对路径(相对于 `root`)
 | method | string | 否 | 'get' | `type` 为 `http` 的情况下，可以填 `get`, `post`, `put` 等 `http` 方法的值
-| middlewares | array | 否 | [] | 中间件数组
+| middlewares | array | 否 | [] | 中间件数组，`http` 模式下，使用 [`koa`](https://koajs.com/#application) 的中间件，而在 `websocket` 的模式下，要写 [`socket.io`](https://socket.io/docs/server-api/#namespace-use-fn) 的中间件。中间件的详细写法，请参考文档[中间件](../docs/middleware.md)
 | validate | object | 否 | | 使用了 [koa-joi-route](https://github.com/koajs/joi-router/)，参数值该类库的 `validate` 参数
 
-至于 `path` 所指向的文件如何处理 `http` 和 `websocket` 请求，可参考文档 [请求处理](./controller.md)
+至于 `path` 所指向的文件如何处理 `http` 和 `websocket` 请求，可参考文档 [请求处理](./controlle.md)
+

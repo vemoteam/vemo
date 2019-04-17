@@ -10,6 +10,7 @@
 * [配置](docs/config.md)
 * [命令行](docs/cli.md)
 * [请求处理](docs/controller.md)
+* [中间件](docs/middleware.md)
 
 ## Demo
 * [HTTP](demo/http/README.md)

@@ -106,11 +106,10 @@ function initCloudBase(instance) {
     }
 }
 
+let io = initIO()
 initStatic()
 initTemplate()
-let io = initIO()
 initCloudBase(app)
-
 
 // define routers
 const defaultRouteConfig = {
@@ -167,9 +166,15 @@ config.routes.forEach((route) => {
         // handler(r)
 
         r.on('connect', async (socket) => {
-            let context = app.createContext(socket.request, {})
-            context.io = io
-            context.tcb = socket.hasOwnProperty('tcb') ? socket.tcb : null
+            appCtx = app.createContext(socket.request, {})
+            let context = {
+                app,
+                io,
+                socket,
+                tcb: socket.hasOwnProperty('tcb') ? socket.tcb : null,
+                request: appCtx.request,
+                response: appCtx.response
+            }
 
             handler(socket, context)
         })
