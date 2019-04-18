@@ -1,11 +1,11 @@
 {
   "name": "@vemo/cli",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "",
   "bin": {
     "vemo": "./bin/bin.js"
   },
-  "main": "./src/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

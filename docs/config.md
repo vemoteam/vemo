@@ -63,6 +63,12 @@ module.exports = {
 
 腾讯云云开发内置中间件，注入 [tcb-admin-node](https://github.com/TencentCloudBase/tcb-admin-node/) 对象（挂在 `ctx` 上下文中），并且会协助获取临时密钥。
 
+获取腾讯云密钥的时候会进行如下尝试
+
+1. 尝试获取 `vemofile.js` 里面的 `cloudbase.secretId` 和 `cloudbase.secretKey`
+2. 如果上面尝试没获取到密钥，则会尝试获取 `@cloudbase/cli` 命令行配置中的 `secretId` 和 `secretKey`
+3. 如果还是没获取到，则尝试拉取接口获取临时密钥（仅在云主机里生效）
+
 |类型 | 必填 | 默认值 | 说明
 | --- | --- | --- | ---
 | boolean/object |  否 | false | 与腾讯云云开发相关的配置项，设置 `true` 或者填写 `object` 配置的时候则会开启。如果为 `true`，会在云主机中尝试获取临时密钥对

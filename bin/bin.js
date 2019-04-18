@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const path = require('path')
 const program = require('commander')
 const packgeJson = require('../package.json')
 
@@ -6,12 +7,20 @@ const packgeJson = require('../package.json')
 program
     .version(packgeJson.version)
 
+
 program
     .command('init [dirname]')
     .description('init project base on template')
     .action(function (dirname = './') {
         let init = require('./init')
         init.init(dirname)
+    })
+
+program
+    .command('main')
+    .description('get main script from package.json')
+    .action(function () {
+        console.log(path.join(__dirname, '../', packgeJson.main))
     })
 
 program

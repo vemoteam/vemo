@@ -6,6 +6,21 @@ const tcb = require('tcb-admin-node')
 const axios = require('axios')
 const isProduction = process.env.NODE_ENV === 'production'
 
+const TCBRC = path.resolve(os.homedir(), '.tcbrc.json')
+
+// 在本地开发时，通过 .tcbrc.json 文件获取密钥
+async function getLocalSecret() {
+    if (fs.existsSync(TCBRC)) {
+        const tcbrc = ini.parse(fs.readFileSync(TCBRC, 'utf-8'))
+
+        if (tcbrc.secretId && tcbrc.secretKey) {
+            process.env.TENCENTCLOUD_SECRETID = tcbrc.secretId
+            process.env.TENCENTCLOUD_SECRETKEY = tcbrc.secretKey
+        }
+    }
+}
+
+// 在云主机中获取临时密钥
 async function getTempSecret(retryTimes = 0, maxRetryTimes) {
     try {
         let result = await axios.get('http://metadata.tencentyun.com/meta-data/cam/security-credentials/PAI_QCSRole')
@@ -48,6 +63,8 @@ module.exports = (options = {}) => {
     if (!process.env.TCB_ENV && env) {
         process.env.TCB_ENV = env
     }
+
+    getLocalSecret()
 
     return async (ctx, next) => {
         // 拉取临时密钥的逻辑
