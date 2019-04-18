@@ -7,6 +7,14 @@ const packgeJson = require('../package.json')
 program
     .version(packgeJson.version)
 
+program
+    .description('get main script file')
+    .command('main')
+    .description('get main script from package.json')
+    .action(function () {
+        console.log(path.join(__dirname, '../', packgeJson.main))
+    })
+
 
 program
     .command('init [dirname]')
@@ -14,13 +22,6 @@ program
     .action(function (dirname = './') {
         let init = require('./init')
         init.init(dirname)
-    })
-
-program
-    .command('main')
-    .description('get main script from package.json')
-    .action(function () {
-        console.log(path.join(__dirname, '../', packgeJson.main))
     })
 
 program
@@ -80,6 +81,11 @@ program
     })
 
 program.parse(process.argv)
+
+// // vemo 命令
+// if (program.args.length < 1 ) {
+//     require('./start')
+// }
 
 // ps aux | grep -i -w "node /Users/heyli/Repo/tcb/vemo/src/cluster.js" | grep -v grep | awk '{print $2}'
 // ps aux | grep -i '\-\-title=\[vemo\]' | grep -v grep | awk '{print $11 " " $2 " " $12 " " $13}' | grep ^node

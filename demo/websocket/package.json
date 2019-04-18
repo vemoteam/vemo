@@ -7,7 +7,7 @@
     "start": "vemo dev",
     "dist": "vemo start",
     "pm2": "pm2 start ./node_modules/@vemo/cli/ --name=websocket --env=production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "vemo": "vemo"
   },
   "author": "",
   "license": "MIT",
