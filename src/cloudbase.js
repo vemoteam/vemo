@@ -2,6 +2,8 @@
 // 生产环境的时候，获取临时密钥 将临时密钥存放在某个位置/内存，有需要用的时候就读取。即将过期的时候就得新拉取。如果没，就读取 vemofile.js 里的永久配置。
 // 开发环境的时候，读取环境变量里的密钥，如果没，则读取vemofile.js里配置的永久密钥
 // 将 tcb-admin-node 注入到 ctx 中
+const ini = require('ini')
+const fs = require('fs')
 const os = require('os')
 const path = require('path')
 const tcb = require('tcb-admin-node')
