@@ -7,7 +7,7 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --coverage"
+    "test": "jest --passWithNoTests --coverage --env=node"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,6 @@
   "license": "MIT",
   "dependencies": {
     "@vemo/koa-views": "^6.1.7",
-    "axios": "^0.18.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "fs-extra": "^7.0.1",
@@ -37,6 +36,7 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "jest": "^24.7.1"
   }
 }

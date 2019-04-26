@@ -1,6 +1,5 @@
 const { VemoError } = require('./../src/error')
 
-
 describe('error.js', () => {
 
     test('Throw VemoError', () => {
@@ -21,7 +20,3 @@ describe('error.js', () => {
     })
 
 })
-
-// const vemoError = new VemoError(VemoFileNotExist, 'vemo file not exist')
-// console.log(vemoError instanceof Error)
-// console.log(vemoError.hasOwnProperty('code'))
