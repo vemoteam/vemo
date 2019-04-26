@@ -6,6 +6,7 @@ module.exports = {
     'host': 'localhost',
     'port': 5001,
     'root': path.resolve('.'),
+    'socket': true,
     'routes': [
         {
             path: 'routes/api.js',
@@ -29,6 +30,17 @@ module.exports = {
         {
             type: 'static',
             path: 'public'
+        },
+        {
+            path: 'routes/chat.js',
+            template: 'templates/chat.html',
+            route: '/chat',
+            method: 'get'
+        },
+        {
+            path: 'routes/ws.js',
+            type: 'websocket',
+            route: '/ws'
         }
     ]
 }

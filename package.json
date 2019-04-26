@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "axios": "^0.18.0",
-    "jest": "^24.7.1"
+    "jest": "^24.7.1",
+    "puppeteer": "^1.15.0"
   }
 }
