@@ -7,7 +7,7 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --coverage --env=node"
+    "test": "jest --passWithNoTests --coverage --env=node --detectOpenHandles"
   },
   "repository": {
     "type": "git",
