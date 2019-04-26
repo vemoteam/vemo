@@ -17,6 +17,10 @@ module.exports = {
             template: './template/index.html',
             route: '/',
             method: 'get'
+        },
+        {
+            type: 'static',
+            path: 'public'
         }
     ]
 }
