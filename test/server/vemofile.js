@@ -3,11 +3,12 @@ const router = require('koa-joi-router')
 const Joi = router.Joi
 
 module.exports = {
-    'host': 'localhost',
-    'port': 5001,
-    'root': path.resolve('.'),
-    'socket': true,
-    'routes': [
+    host: 'localhost',
+    port: 5001,
+    root: path.resolve('.'),
+    socket: true,
+    cloudbase: true,
+    routes: [
         {
             path: 'routes/api.js',
             route: '/api',
@@ -40,7 +41,10 @@ module.exports = {
         {
             path: 'routes/ws.js',
             type: 'websocket',
-            route: '/ws'
+            route: '/ws',
+            middlewares: [
+                async (ctx, next) => next()
+            ]
         }
     ]
 }
