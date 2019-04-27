@@ -2,7 +2,6 @@ process.chdir(__dirname) // change work dir for positioning vemofile.js
 require('./../../src/') // run server
 
 const axios = require('axios')
-const puppeteer = require('puppeteer')
 const config = require('./vemofile')
 const instance = axios.create({
     baseURL: `http://${config.host}:${config.port}`
@@ -60,15 +59,35 @@ describe('index.js websocket server', () => {
     })
 
     test('client receive msg from server and update dom content', async () => {
-        expect.assertions(1)
-        const browser = await puppeteer.launch()
-        const page = await browser.newPage()
-        await page.goto(`http://${config.host}:${config.port}/chat`)
-        await page.waitFor(2000)
-        const content = await page.content()
-        expect(content).toMatch(/baby/is)
-        await browser.close()
+        expect.hasAssertions()
+
+        async function launchBrowser() {
+            try {
+                const puppeteer = require('puppeteer')
+                const browser = await puppeteer.launch()
+                return browser
+            } catch(error) {
+                console.log(
+                    'Don\'t run test in Windows. \n' + 
+                    'If you fail to launch on UNIX, please install dependencies. \n' +
+                    'More info: https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md. \n'
+                )
+                return null
+            }
+        }
+
+        const browser = await launchBrowser()
+        if(browser) {
+            const page = await browser.newPage()
+            await page.goto(`http://${config.host}:${config.port}/chat`)
+            await page.waitFor(2000)
+            const content = await page.content()
+            expect(content).toMatch(/baby/is)
+            await page.close()
+            await browser.close()
+        } else {
+            expect(browser).toBeNull()
+        }
     })
 
 })
-    
