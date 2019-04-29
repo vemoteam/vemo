@@ -7,7 +7,9 @@
     <div id="page"><span id="client"></span><span> <%= name %></span></div>
     <script src="/socket.io.js"></script>
     <script>
-        let socket = io('http://localhost:5000/ws');
+        let socket = io('http://localhost:5000/ws', {
+          transports: [ 'websocket' ]
+        });
 
         socket.emit('server', { hello: 'server' });
 
