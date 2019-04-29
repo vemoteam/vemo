@@ -1,6 +1,11 @@
+const { 
+    secretId, 
+    secretKey 
+} = require('./config')
+
 const options = {
-    secretId: 'testSecretId',
-    secretKey: 'testSecretKey',
+    secretId,
+    secretKey,
     env: true,
     isProduction: true
 }
