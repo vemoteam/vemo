@@ -7,8 +7,8 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --detectOpenHandles",
-    "test:coveralls": "jest --passWithNoTests --detectOpenHandles --coverageReporters=text-lcov | coveralls"
+    "test": "jest --forceExit --passWithNoTests --detectOpenHandles",
+    "test:coveralls": "jest --forceExit --passWithNoTests --detectOpenHandles --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
