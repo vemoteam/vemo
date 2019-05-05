@@ -5,6 +5,7 @@ node_js:
   - "10"
 install: 
   - npm install
+before_script: mv ./test/config/example.js ./test/config/index.js
 script: npm run test
 after_success:
   - cat ./tests/coverage/lcov.info | node_modules/.bin/coveralls --verbose
