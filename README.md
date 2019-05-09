@@ -5,6 +5,11 @@
 
 简易的 Web 框架
 
+![npm (scoped)](https://img.shields.io/npm/v/@vemo/cli.svg)
+![Travis (.org)](https://img.shields.io/travis/vemoteam/vemo.svg)
+![NPM](https://img.shields.io/npm/l/@vemo/cli.svg)
+![Coveralls github](https://img.shields.io/coveralls/github/vemoteam/vemo.svg)
+
 ## 文档
 * [指南](docs/guide.md)
 * [配置](docs/config.md)
