@@ -164,7 +164,7 @@ function init() {
             }
         }
 
-        process.on('uncaughtException', err => {
+        process.on('uncaughtException', (err: NodeJS.ErrnoException) => {
             // 端口被占用，则直接退出进程
             if (err.code === 'EADDRINUSE') {
                 process.send('killMaster')

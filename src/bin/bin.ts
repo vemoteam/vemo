@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const path = require('path')
+import * as path from 'path'
 const program = require('commander')
 const packgeJson = require('../package.json')
 
@@ -87,5 +87,5 @@ program.parse(process.argv)
 //     require('./start')
 // }
 
-// ps aux | grep -i -w "node /Users/heyli/Repo/tcb/vemo/src/cluster.js" | grep -v grep | awk '{print $2}'
+// ps aux | grep -i -w "node /Users/heyli/Repo/tcb/vemo/dist/cluster.js" | grep -v grep | awk '{print $2}'
 // ps aux | grep -i '\-\-title=\[vemo\]' | grep -v grep | awk '{print $11 " " $2 " " $12 " " $13}' | grep ^node

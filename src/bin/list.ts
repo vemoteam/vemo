@@ -1,4 +1,7 @@
-const execSync = require('child_process').execSync
+import {
+    execSync
+} from 'child_process'
+
 const {
     table
 } = require('table')
@@ -10,14 +13,14 @@ function findAll() {
         encoding: 'utf-8'
     })
     
-    result = result.split('\n')
-    result = result.filter((item) => {
+    let resultArrr = result.split('\n')
+    resultArrr = resultArrr.filter((item) => {
         return item && /^node/.test(item)
     })
 
     let psInfo = {}
 
-    result.forEach((item) => {
+    resultArrr.forEach((item) => {
         let ps = item.split(' ')
         let id = ps[1]
         psInfo[id] = {}

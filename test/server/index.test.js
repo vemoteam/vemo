@@ -1,5 +1,5 @@
 process.chdir(__dirname) // change work dir for positioning vemofile.js 
-require('./../../src/') // run server
+require('./../../dist/') // run server
 
 const axios = require('axios')
 const config = require('./vemofile')

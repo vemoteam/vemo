@@ -1,4 +1,7 @@
-const execSync = require('child_process').execSync
+import {
+    execSync
+} from 'child_process'
+
 const {
     findByName,
 } = require('./list')

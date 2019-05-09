@@ -1,4 +1,4 @@
-const utils = require('./../src/utils')
+const utils = require('./../dist/utils')
 
 describe('utils.js', () => {
     test('cpuNum getter', () => {

@@ -1,19 +1,21 @@
-const path = require('path')
-const fs = require('fs')
+import * as path from 'path'
+import * as fs from 'fs'
 
-const {
+import {
     VemoError,
     VemoFileNotExist,
     ConfigRootNotExist,
-} = require('./error')
+} from './error'
 
 const cloudBaseMiddleware = require('./cloudbase')
 
-const Koa = require('koa')
-const Router = require('koa-joi-router')
-const serve = require('koa-static')
+import * as Koa from 'koa'
+import * as Router from 'koa-joi-router'
+import * as serve from 'koa-static'
+import { ServerResponse } from 'http';
+
+let app = new Koa()
 const views = require('@vemo/koa-views')
-const app = new Koa()
 const server = require('http').Server(app.callback())
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -32,20 +34,27 @@ if (!fs.existsSync(configPath)) {
 }
 
 // default config
-let defaultConfig = {
-    'host': 'localhost',
-    'port': 5000,
-    'root': path.resolve(),
-    'cloudbase': false // 默认开启
-}
-defaultConfig.template = {
-    'map': {
-        'html': 'underscore'
-    },
-    'options': {
-        'cache': isProduction ? true : false // 生产环境的时候缓存模板
+let defaultConfig: {
+    host: string
+    port: number | string
+    root: string
+    cloudbase: boolean | object
+    template?: any
+} = {
+    host: 'localhost',
+    port: 5000,
+    root: path.resolve(),
+    cloudbase: false, // 默认开启
+    template: {
+        map: {
+            html: 'underscore'
+        },
+        options: {
+            cache: isProduction ? true : false // 生产环境的时候缓存模板
+        }
     }
 }
+
 // user defined config
 const userConfig = require(configPath)
 const config = {...defaultConfig, ...userConfig}
@@ -57,22 +66,7 @@ if (!fs.existsSync(config.root)) {
     throw new VemoError(ConfigRootNotExist, `${config.root} not exist!`)
 }
 
-// function initStatic() {
-//     // init static files serving
-//     if (config.static) {
-//         let staticConfig = (typeof config.static === 'object') ? config.static : {
-//             'root': 'static',
-//             'options': {}
-//         }
-
-//         if (!path.isAbsolute(staticConfig.root)) {
-//             staticConfig.root = path.join(config.root, staticConfig.root)
-//         }
-//         app.use(serve(staticConfig.root, staticConfig.options))
-//     }
-// }
-
-function initTemplate() {
+function initTemplate(): void {
     // render template
     if (config.template) {
         let tplConfig = {
@@ -83,20 +77,19 @@ function initTemplate() {
     }
 }
 
-function initIO() {
+function initIO(): null | any {
     // init socket.io
-    let io = null
+    let io: SocketIO.Server
     if (config.socket) {
         let socketConfig = (typeof config.socket === 'object') ? config.socket : {}
         io = require('socket.io')(server, socketConfig)
-        app.io = io
         return io
     }
 
     return null
 }
 
-function initCloudBase(instance) {
+function initCloudBase(instance): void {
     if (config.cloudbase) {
         config.cloudbase = typeof config.cloudbase === 'object' ?  config.cloudbase : {
             env: null
@@ -107,7 +100,6 @@ function initCloudBase(instance) {
 }
 
 let io = initIO()
-// initStatic()
 initTemplate()
 initCloudBase(app)
 
@@ -127,7 +119,7 @@ config.routes.forEach((route) => {
 
     // for http route
     if (c.type === 'http') {
-        let router = new Router()
+        let router = Router()
 
         if (c.hasOwnProperty('validate')) {
             c.middlewares.push({
@@ -166,7 +158,7 @@ config.routes.forEach((route) => {
         // handler(r)
 
         r.on('connect', async (socket) => {
-            appCtx = app.createContext(socket.request, {})
+            let appCtx = app.createContext(socket.request, <ServerResponse>{})
             let context = {
                 app,
                 io,

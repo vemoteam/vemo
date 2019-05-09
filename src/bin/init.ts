@@ -1,8 +1,14 @@
-const path = require('path')
-const fs = require('fs-extra')
+import * as path from 'path'
+import * as fs from 'fs-extra'
+import { string } from 'joi';
 const inquirer = require('inquirer')
 
-async function ask() {
+interface Answers {
+    tpl: string
+    project: string
+}
+
+async function ask(): Promise<Answers> {
     return new Promise((resolve, reject) => {
         inquirer
             .prompt([
@@ -19,7 +25,7 @@ async function ask() {
                     choices: ['http', 'websocket']
                 }
             ])
-            .then(answers => {
+            .then((answers: Answers) => {
                 resolve(answers)
             })
             .catch(err => {

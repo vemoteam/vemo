@@ -1,4 +1,4 @@
-const { VemoError } = require('./../src/error')
+const { VemoError } = require('./../dist/error')
 
 describe('error.js', () => {
 
