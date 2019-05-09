@@ -1,4 +1,4 @@
-const path = require('path')
+import * as path from 'path'
 const minimist = require('minimist')
 const nodeDev = require('node-dev')
 
@@ -38,7 +38,7 @@ let opts = minimist(devArgs, {
 });
 
 nodeDev(
-  path.join(__dirname, '../src/index.js'),
+  path.join(__dirname, '../dist/index.js'),
   scriptArgs,
   nodeArgs,
   opts

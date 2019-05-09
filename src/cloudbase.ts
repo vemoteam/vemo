@@ -3,9 +3,10 @@
 // 开发环境的时候，读取环境变量里的密钥，如果没，则读取vemofile.js里配置的永久密钥
 // 将 tcb-admin-node 注入到 ctx 中
 const ini = require('ini')
-const fs = require('fs')
-const os = require('os')
-const path = require('path')
+import * as os from 'os'
+import * as path from 'path'
+import * as fs from 'fs'
+
 const tcb = require('tcb-admin-node')
 const axios = require('axios')
 const isProduction = process.env.NODE_ENV === 'production'
@@ -33,7 +34,7 @@ async function getTempSecret(retryTimes = 0, maxRetryTimes) {
         process.env.TENCENTCLOUD_SECRETID = secret.TmpSecretId
         process.env.TENCENTCLOUD_SECRETKEY = secret.TmpSecretKey
         process.env.TENCENTCLOUD_SESSIONTOKEN = secret.Token
-        process.env.TENCENTCLOUD_SECRETEXPIRE = secret.ExpiredTime - 600 // 提早10分钟重新拉取，单位秒
+        process.env.TENCENTCLOUD_SECRETEXPIRE = String(secret.ExpiredTime - 600) // 提早10分钟重新拉取，单位秒
     }
     catch (e) {
         console.error('[vemo] fail to get tencent cloud temporary secret.')
@@ -77,7 +78,8 @@ module.exports = (options = {}) => {
         }
 
         // 临时密钥过期，重新拉取 （如果有 TENCENTCLOUD_SESSIONTOKEN, 表示这必定是临时密钥）
-        if (process.env.TENCENTCLOUD_SESSIONTOKEN && Math.floor(Date.now() / 1000) > process.env.TENCENTCLOUD_SECRETEXPIRE) {
+        let isExpire = Math.floor(Date.now() / 1000) > +process.env.TENCENTCLOUD_SECRETEXPIRE
+        if (process.env.TENCENTCLOUD_SESSIONTOKEN && isExpire ) {
             await getTempSecret(0, maxRetryTimes)
         }
 

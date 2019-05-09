@@ -11,7 +11,7 @@ const options = {
 }
 
 const axios = require('axios')
-const cloudBaseMiddleware = require('./../src/cloudbase')(options)
+const cloudBaseMiddleware = require('./../dist/cloudbase')(options)
 
 jest.mock('axios')
 

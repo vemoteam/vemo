@@ -3,12 +3,14 @@
   "version": "0.0.24",
   "description": "",
   "bin": {
-    "vemo": "./bin/bin.js"
+    "vemo": "./dist/bin/bin.js"
   },
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "jest --forceExit --passWithNoTests --detectOpenHandles",
-    "test:coveralls": "jest --forceExit --passWithNoTests --detectOpenHandles --coverageReporters=text-lcov | coveralls"
+    "start": "tsc -p tsconfig.json -w",
+    "dist": "tsc -p tsconfig.json",
+    "test": "npm run dist && jest --forceExit --passWithNoTests --detectOpenHandles",
+    "test:coveralls": "npm run dist && jest --forceExit --passWithNoTests --detectOpenHandles --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,10 @@
   "author": "heyli",
   "license": "MIT",
   "dependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-joi-router": "^5.2.2",
+    "@types/koa-static": "^4.0.1",
+    "@types/socket.io": "^2.1.2",
     "@vemo/koa-views": "^6.1.7",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
@@ -37,9 +43,15 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
+    "@types/node": "^12.0.0",
     "axios": "^0.18.0",
     "coveralls": "^3.0.3",
+    "eslint": "^5.16.0",
+    "eslint-config-alloy": "^1.4.2",
+    "eslint-plugin-typescript": "^0.14.0",
     "jest": "^24.7.1",
-    "puppeteer": "^1.15.0"
+    "puppeteer": "^1.15.0",
+    "typescript": "^3.4.5",
+    "typescript-eslint-parser": "^22.0.0"
   }
 }
