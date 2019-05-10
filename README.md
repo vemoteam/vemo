@@ -16,6 +16,7 @@
 * [命令行](docs/cli.md)
 * [请求处理](docs/controller.md)
 * [中间件](docs/middleware.md)
+* [测试](docs/test.md)
 
 ## Demo
 * [HTTP](demo/http/README.md)

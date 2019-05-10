@@ -23,11 +23,6 @@
   "author": "heyli",
   "license": "MIT",
   "dependencies": {
-    "@types/koa": "^2.0.48",
-    "@types/koa-joi-router": "^5.2.2",
-    "@types/koa-static": "^4.0.1",
-    "@types/socket.io": "^2.1.2",
-    "@vemo/koa-views": "^6.1.7",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "fs-extra": "^7.0.1",
@@ -43,6 +38,11 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-joi-router": "^5.2.2",
+    "@types/koa-static": "^4.0.1",
+    "@types/socket.io": "^2.1.2",
+    "@vemo/koa-views": "^6.1.7",
     "@types/node": "^12.0.0",
     "axios": "^0.18.0",
     "coveralls": "^3.0.3",
