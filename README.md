@@ -8,7 +8,7 @@
 [![NPM Version](https://img.shields.io/npm/v/@vemo/cli.svg?style=flat)](https://www.npmjs.com/package/@vemo/cli)
 [![Travis](https://img.shields.io/travis/vemoteam/vemo.svg)](https://travis-ci.org/vemoteam/vemo)
 ![NPM](https://img.shields.io/npm/l/@vemo/cli.svg)
-[![Coverage](https://img.shields.io/coveralls/vemoteam/vemo.svg)](https://coveralls.io/github/vemoteam/vemo)
+[![Coverage Status](https://coveralls.io/repos/github/vemoteam/vemo/badge.svg)](https://coveralls.io/github/vemoteam/vemo)
 
 ## 文档
 * [指南](docs/guide.md)
