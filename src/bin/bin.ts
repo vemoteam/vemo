@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import * as path from 'path'
 const program = require('commander')
-const packgeJson = require('../package.json')
+const packgeJson = require('../../package.json')
 
 // show version
 program

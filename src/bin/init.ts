@@ -39,7 +39,7 @@ module.exports = {
         let dir = path.resolve(dirname)
 
         let answers = await ask()
-        let tplPath = path.join(__dirname, '../demo', answers.tpl)
+        let tplPath = path.join(__dirname, '../../demo', answers.tpl)
 
         try {
             fs.copySync(tplPath, dir)

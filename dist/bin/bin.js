@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
 const program = require('commander');
-const packgeJson = require('../package.json');
+const packgeJson = require('../../package.json');
 // show version
 program
     .version(packgeJson.version);
