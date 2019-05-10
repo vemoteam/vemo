@@ -1,6 +1,6 @@
 {
   "name": "@vemo/cli",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "",
   "bin": {
     "vemo": "dist/bin/bin.js"
@@ -23,6 +23,7 @@
   "author": "heyli",
   "license": "MIT",
   "dependencies": {
+    "@vemo/koa-views": "^6.1.7",
     "axios": "^0.18.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
@@ -43,7 +44,6 @@
     "@types/koa-joi-router": "^5.2.2",
     "@types/koa-static": "^4.0.1",
     "@types/socket.io": "^2.1.2",
-    "@vemo/koa-views": "^6.1.7",
     "@types/node": "^12.0.0",
     "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
