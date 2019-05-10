@@ -5,10 +5,10 @@
 
 简易的 Web 框架
 
-![npm (scoped)](https://img.shields.io/npm/v/@vemo/cli.svg)
-![Travis (.org)](https://img.shields.io/travis/vemoteam/vemo.svg)
+[![NPM Version](https://img.shields.io/npm/v/@vemo/cli.svg?style=flat)](https://www.npmjs.com/package/@vemo/cli)
+[![Travis](https://img.shields.io/travis/vemoteam/vemo.svg)](https://travis-ci.org/vemoteam/vemo)
 ![NPM](https://img.shields.io/npm/l/@vemo/cli.svg)
-![Coveralls github](https://img.shields.io/coveralls/github/vemoteam/vemo.svg)
+[![Coverage](https://img.shields.io/coveralls/vemoteam/vemo.svg)](https://coveralls.io/github/vemoteam/vemo)
 
 ## 文档
 * [指南](docs/guide.md)

@@ -7,5 +7,6 @@ module.exports = {
         '<rootDir>/jest.setup.js'
     ],
     collectCoverage: true,
+    coverageDirectory: '<rootDir>/test/coverage',
     testEnvironment: 'node'
 }
