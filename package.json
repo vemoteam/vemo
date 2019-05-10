@@ -1,9 +1,9 @@
 {
   "name": "@vemo/cli",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "",
   "bin": {
-    "vemo": "./dist/bin/bin.js"
+    "vemo": "dist/bin/bin.js"
   },
   "main": "dist/index.js",
   "scripts": {
