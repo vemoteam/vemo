@@ -12,7 +12,7 @@ program
     .command('main')
     .description('get main script from package.json')
     .action(function () {
-    console.log(path.join(__dirname, '../', packgeJson.main));
+    console.log(path.join(__dirname, '../../', packgeJson.main));
 });
 program
     .command('init [dirname]')
