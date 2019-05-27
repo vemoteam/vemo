@@ -13,7 +13,7 @@ if (!fs.existsSync(packageJsonPath)) {
 
 let packageJson = require(packageJsonPath)
 
-let cp = spawn('node', [path.join(__dirname, '../dist/cluster.js'), `--title=[vemo]${packageJson.name}`], {
+let cp = spawn('node', [path.join(__dirname, '../cluster.js'), `--title=[vemo]${packageJson.name}`], {
     detached : true,
 })
 

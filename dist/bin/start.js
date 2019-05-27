@@ -9,7 +9,7 @@ if (!fs.existsSync(packageJsonPath)) {
     throw new Error(`${packageJsonPath} not exists.`);
 }
 let packageJson = require(packageJsonPath);
-let cp = child_process_1.spawn('node', [path.join(__dirname, '../dist/cluster.js'), `--title=[vemo]${packageJson.name}`], {
+let cp = child_process_1.spawn('node', [path.join(__dirname, '../cluster.js'), `--title=[vemo]${packageJson.name}`], {
     detached: true,
 });
 cp.on('message', (data) => {

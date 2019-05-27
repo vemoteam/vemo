@@ -35,4 +35,4 @@ let opts = minimist(devArgs, {
         nodeArgs.push(arg);
     }
 });
-nodeDev(path.join(__dirname, '../dist/index.js'), scriptArgs, nodeArgs, opts);
+nodeDev(path.join(__dirname, '../index.js'), scriptArgs, nodeArgs, opts);
