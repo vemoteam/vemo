@@ -1,8 +1,8 @@
 "use strict";
 const os = require("os");
 const path = require("path");
-// Stack trace format :
-// https://github.com/v8/v8/wiki/Stack%20Trace%20API
+const chalk_1 = require("chalk");
+// 堆栈报错格式: https://github.com/v8/v8/wiki/Stack%20Trace%20API
 const stackReg = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i;
 const stackReg2 = /at\s+()(.*):(\d*):(\d*)/i;
 /**
@@ -34,6 +34,12 @@ function getPowerDate() {
  */
 class Logger {
     constructor() {
+        this._colors = {
+            info: chalk_1.default.blue,
+            success: chalk_1.default.green,
+            warn: chalk_1.default.yellow,
+            error: chalk_1.default.red
+        };
     }
     /**
      * 捕获日志的时间、触发函数、触发文件等详细信息
@@ -68,17 +74,16 @@ class Logger {
         if (!info) {
             return;
         }
-        const str = `[${info.level}] ${info.time} ${info.file}:${info.line} (${info.method}) ${info.message}`;
-        console.log(str);
+        const colorLevel = this._colors[info.level](`[${info.level}]`);
+        return `${colorLevel} ${info.time} ${info.file}:${info.line} (${info.method}) ${info.message}`;
     }
     /**
-     * log级别日志
+     * log级别日志(正常输出)
      *
      * @param message 日志信息
      */
     log(message) {
-        const loginfo = this._capture(message, 'log');
-        this._console(loginfo);
+        return console.log(`[log] ${message}`);
     }
     /**
      * info级别日志
@@ -86,8 +91,19 @@ class Logger {
      * @param message 日志信息
      */
     info(message) {
-        const loginfo = this._capture(message, 'info');
-        this._console(loginfo);
+        const logInfo = this._capture(message, 'info');
+        const consoleInfo = this._console(logInfo);
+        console.log(consoleInfo);
+    }
+    /**
+     * success级别日志
+     *
+     * @param message 日志信息
+     */
+    success(message) {
+        const logInfo = this._capture(message, 'success');
+        const consoleInfo = this._console(logInfo);
+        console.log(consoleInfo);
     }
     /**
      * warning级别日志
@@ -95,8 +111,9 @@ class Logger {
      * @param message 日志信息
      */
     warn(message) {
-        const loginfo = this._capture(message, 'warn');
-        this._console(loginfo);
+        const logInfo = this._capture(message, 'warn');
+        const consoleInfo = this._console(logInfo);
+        console.log(consoleInfo);
     }
     /**
      * error级别日志
@@ -104,8 +121,9 @@ class Logger {
      * @param message 日志信息
      */
     error(message) {
-        const loginfo = this._capture(message, 'error');
-        this._console(loginfo);
+        const logInfo = this._capture(message, 'error');
+        const consoleInfo = this._console(logInfo);
+        console.log(consoleInfo);
     }
 }
 module.exports = {

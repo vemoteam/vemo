@@ -1,8 +1,8 @@
 import * as os from 'os'
 import * as path from 'path'
+import { default as chalk } from 'chalk'
 
-// Stack trace format :
-// https://github.com/v8/v8/wiki/Stack%20Trace%20API
+// 堆栈报错格式: https://github.com/v8/v8/wiki/Stack%20Trace%20API
 const stackReg = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i
 const stackReg2 = /at\s+()(.*):(\d*):(\d*)/i
 
@@ -62,8 +62,15 @@ function getPowerDate(): PowerDate {
  */
 class Logger {
 
+    private _colors: any;
+
     public constructor () {
-        
+        this._colors = {
+            info: chalk.blue,
+            success: chalk.green,
+            warn: chalk.yellow,
+            error: chalk.red
+        }
     }
 
     /**
@@ -96,23 +103,22 @@ class Logger {
      * 
      * @param info 详细日志信息
      */
-    private _console (info: void | LogInfo) {
+    private _console (info: void | LogInfo): string {
         if (!info) {
             return
         }
 
-        const str = `[${info.level}] ${info.time} ${info.file}:${info.line} (${info.method}) ${info.message}`
-        console.log(str)
+        const colorLevel = this._colors[info.level](`[${info.level}]`)
+        return `${colorLevel} ${info.time} ${info.file}:${info.line} (${info.method}) ${info.message}`
     }
 
     /**
-     * log级别日志
+     * log级别日志(正常输出)
      * 
      * @param message 日志信息
      */
     public log (message: string) {
-        const loginfo = this._capture(message, 'log')
-        this._console(loginfo)
+        return console.log(`[log] ${message}`)
     }
 
     /**
@@ -120,9 +126,21 @@ class Logger {
      * 
      * @param message 日志信息
      */
-    public info (message) {
-        const loginfo = this._capture(message, 'info')
-        this._console(loginfo)
+    public info (message: string) {
+        const logInfo = this._capture(message, 'info')
+        const consoleInfo = this._console(logInfo)
+        console.log(consoleInfo)
+    }
+
+    /**
+     * success级别日志
+     * 
+     * @param message 日志信息
+     */
+    public success (message: string) {
+        const logInfo = this._capture(message, 'success')
+        const consoleInfo = this._console(logInfo)
+        console.log(consoleInfo)
     }
 
     /**
@@ -130,9 +148,10 @@ class Logger {
      * 
      * @param message 日志信息
      */
-    public warn (message) {
-        const loginfo = this._capture(message, 'warn')
-        this._console(loginfo)
+    public warn (message: string) {
+        const logInfo = this._capture(message, 'warn')
+        const consoleInfo = this._console(logInfo)
+        console.log(consoleInfo)
     }
 
     /**
@@ -140,9 +159,10 @@ class Logger {
      * 
      * @param message 日志信息
      */
-    public error (message) {
-        const loginfo = this._capture(message, 'error')
-        this._console(loginfo)
+    public error (message: string) {
+        const logInfo = this._capture(message, 'error')
+        const consoleInfo = this._console(logInfo)
+        console.log(consoleInfo)
     }
 }
 
