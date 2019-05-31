@@ -1,6 +1,8 @@
 import * as os from 'os'
 import * as path from 'path'
 
+// Stack trace format :
+// https://github.com/v8/v8/wiki/Stack%20Trace%20API
 const stackReg = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i
 const stackReg2 = /at\s+()(.*):(\d*):(\d*)/i
 
@@ -17,10 +19,14 @@ interface LogInfo {
 }
 
 interface PowerDate extends Date {
-    now?: string,
+    now?: () => string,
     format?: () => string
 }
 
+/**
+ * 自动为数字补0
+ * @param num 
+ */
 function padZero(num: number): string {
     if (num < 10) {
         return '0' + num
@@ -29,10 +35,13 @@ function padZero(num: number): string {
     }
 }
 
+/**
+ * 增强型Date对象
+ */
 function getPowerDate(): PowerDate {
     const date: PowerDate = new Date()
 
-    date.now = date.getTime() + ''
+    date.now = () => date.getTime() + ''
 
     date.format = () => {
         const year = padZero(date.getFullYear()),
@@ -48,13 +57,21 @@ function getPowerDate(): PowerDate {
     return date
 }
 
+/**
+ * 日志类
+ */
 class Logger {
-
 
     public constructor () {
         
     }
 
+    /**
+     * 捕获日志的时间、触发函数、触发文件等详细信息
+     * 
+     * @param message 日志信息
+     * @param level 日志级别
+     */
     private _capture (message: string, level: string): void | LogInfo {
         const error = new Error()
         const stackList = error.stack.split('\n').slice(3)
@@ -74,6 +91,11 @@ class Logger {
         }
     }
 
+    /**
+     * 将详细日志信息输出到控制台
+     * 
+     * @param info 详细日志信息
+     */
     private _console (info: void | LogInfo) {
         if (!info) {
             return
@@ -83,21 +105,41 @@ class Logger {
         console.log(str)
     }
 
+    /**
+     * log级别日志
+     * 
+     * @param message 日志信息
+     */
     public log (message: string) {
         const loginfo = this._capture(message, 'log')
         this._console(loginfo)
     }
 
+    /**
+     * info级别日志
+     * 
+     * @param message 日志信息
+     */
     public info (message) {
         const loginfo = this._capture(message, 'info')
         this._console(loginfo)
     }
 
+    /**
+     * warning级别日志
+     * 
+     * @param message 日志信息
+     */
     public warn (message) {
         const loginfo = this._capture(message, 'warn')
         this._console(loginfo)
     }
 
+    /**
+     * error级别日志
+     * 
+     * @param message 日志信息
+     */
     public error (message) {
         const loginfo = this._capture(message, 'error')
         this._console(loginfo)
@@ -105,8 +147,8 @@ class Logger {
 }
 
 export = {
-    get cpuNum():number {
-        let len = os.cpus().length
+    get cpuNum (): number {
+        const len = os.cpus().length
         return Math.max(len, 4)
     },
     logger: new Logger()
