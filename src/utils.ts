@@ -62,6 +62,9 @@ function getPowerDate(): PowerDate {
  */
 class Logger {
 
+    /**
+     * 颜色函数映射
+     */
     private _colors: any;
 
     public constructor () {
