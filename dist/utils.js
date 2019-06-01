@@ -51,19 +51,20 @@ class Logger {
         const error = new Error();
         const stackList = error.stack.split('\n').slice(3);
         const sp = stackReg.exec(stackList[0]) || stackReg2.exec(stackList[0]);
-        if (sp && sp.length === 5) {
-            return {
-                time: getPowerDate().format(),
-                method: sp[1],
-                path: sp[2],
-                line: sp[3],
-                pos: sp[4],
-                file: path.basename(sp[2]),
-                stack: error.stack,
-                message,
-                level
-            };
+        if (!sp) {
+            return;
         }
+        return {
+            time: getPowerDate().format(),
+            method: sp[1],
+            path: sp[2],
+            line: sp[3],
+            pos: sp[4],
+            file: path.basename(sp[2]),
+            stack: error.stack,
+            message,
+            level
+        };
     }
     /**
      * 将详细日志信息输出到控制台
