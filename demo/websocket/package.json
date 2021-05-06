@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@vemo/cli": "latest",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {}
 }
